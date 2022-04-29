@@ -188,4 +188,5 @@ pip-selfcheck.json
 
 .venv
 admin/.dbdata/*
+main/.dbdata/*
 .idea
