@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-7@bj@_z6n_m(s0i6dq2q4dv&_glpp1b44@&8^*3+-@4__4u-h0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#setting to call other servicall this container
+ALLOWED_HOSTS = ['host.docker.internal']
 
 
 # Application definition
@@ -133,3 +134,5 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
+    
+ 
