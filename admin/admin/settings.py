@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-7@bj@_z6n_m(s0i6dq2q4dv&_glpp1b44@&8^*3+-@4__4u-h0
 DEBUG = True
 
 #setting to call other servicall this container
-ALLOWED_HOSTS = ['host.docker.internal']
+ALLOWED_HOSTS = ['host.docker.internal','localhost','*','http://localhost:3000']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -134,5 +135,4 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
-    
- 
+CORS_ALLOW_CREDENTIALS = True

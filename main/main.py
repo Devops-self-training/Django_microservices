@@ -1,6 +1,4 @@
-from crypt import methods
 from dataclasses import dataclass
-from ssl import VerifyFlags
 
 from flask import Flask, jsonify, abort
 from flask_cors import CORS
@@ -8,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import UniqueConstraint
 
 import requests
+
+from producer import publish
 
 app = Flask(__name__)
 
@@ -40,14 +40,25 @@ class ProductUser(db.Model):
 
 @app.route('/api/products')
 def index():
-    return jsonify(Product.query.all())
+    return (Product.query.all())
 
 
 @app.route('/api/products/<int:id>/like', methods=['POST'])
 def like(id):
     req = requests.get(host_admin,verify=False)
-    return jsonify(req.json())
-
+    jsondata = req.json()
+    try:
+        productUser = ProductUser(user_id=jsondata['id'], product_id=id)
+        db.session.add(productUser)
+        db.session.commit()
+        #event
+        publish('product_liked', id)
+    except:
+        abort(400, 'you are alreadt liked this product')
+        pass
+    return jsonify({
+        'message': 'success'
+    })
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
