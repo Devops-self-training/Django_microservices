@@ -40,7 +40,7 @@ class ProductUser(db.Model):
 
 @app.route('/api/products')
 def index():
-    return (Product.query.all())
+    return jsonify(Product.query.all())
 
 
 @app.route('/api/products/<int:id>/like', methods=['POST'])
@@ -54,7 +54,7 @@ def like(id):
         #event
         publish('product_liked', id)
     except:
-        abort(400, 'you are alreadt liked this product')
+        abort(400, 'you are already liked this product')
         pass
     return jsonify({
         'message': 'success'
